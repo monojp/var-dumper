@@ -23,6 +23,7 @@ require_once __DIR__.'/Resources/functions/dump.php';
  */
 class VarDumper
 {
+    public static $dumped = false;
     private static $handler;
 
     public static function dump($var)
@@ -35,7 +36,9 @@ class VarDumper
             };
         }
 
-        return \call_user_func(self::$handler, $var);
+        $output = \call_user_func(self::$handler, $var);
+        self::$dumped = true;
+        return $output;
     }
 
     public static function setHandler(callable $callable = null)

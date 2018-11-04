@@ -46,6 +46,19 @@ class FunctionsTest extends TestCase
         $this->assertEquals(array($var1, $var2, $var3), $return);
     }
 
+    public function testDumped()
+    {
+        VarDumper::$dumped = false;
+        $this->setupVarDumper();
+        $this->assertFalse(VarDumper::$dumped);
+
+        ob_start();
+        $return = dump(array('a' => 'b'));
+        $out = ob_get_clean();
+
+        $this->assertTrue(VarDumper::$dumped);
+    }
+
     protected function setupVarDumper()
     {
         $cloner = new VarCloner();
